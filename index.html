@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -61,7 +62,10 @@ button:disabled { opacity: 0.5; cursor: default; }
 #progress { color: #555; font-size: 14px; }
 p { line-height: 1.7; }
 
-/* GIF AÇILIŞ EKRANI */
+/* =====================================
+   GIF AÇILIŞ EKRANI
+   ===================================== */
+
 #logoSplash {
     position: fixed;
     inset: 0;
@@ -69,11 +73,21 @@ p { line-height: 1.7; }
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, #ffffff 45%, #e9edf5 100%);
-    perspective: 1100px;
+    overflow: hidden;
+
+    background: radial-gradient(
+        circle,
+        #ffffff 0%,
+        #edf2fa 50%,
+        #cbd9ed 100%
+    );
+
     opacity: 1;
     visibility: visible;
-    transition: opacity 1s ease, visibility 1s ease;
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
 }
 
 #logoSplash.hide {
@@ -82,82 +96,15 @@ p { line-height: 1.7; }
     pointer-events: none;
 }
 
-.logo-wrapper {
-    position: relative;
-    width: min(78vw, 430px);
-    aspect-ratio: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-    animation: logoFloat 2.5s ease-in-out infinite;
-}
-
-.logo-wrapper img {
-    width: 100%;
-    height: 100%;
+#introGif {
+    width: min(80vw, 500px);
+    height: auto;
+    max-height: 85vh;
     object-fit: contain;
-    border-radius: 50%;
-    backface-visibility: visible;
-    transform-style: preserve-3d;
-    animation: logo3D 3.2s ease-in-out infinite;
-    filter:
-        drop-shadow(0 0 7px rgba(255,255,255,0.95))
-        drop-shadow(0 0 15px rgba(64,91,128,0.55))
-        drop-shadow(0 0 28px rgba(255,215,100,0.45));
-}
-
-.logo-wrapper::before {
-    content: "";
-    position: absolute;
-    inset: -10%;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-        rgba(255,255,255,0) 38%,
-        rgba(255,215,100,0.28) 58%,
-        rgba(100,150,220,0.18) 68%,
-        rgba(255,255,255,0) 76%);
-    animation: logoGlow 1.8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.logo-wrapper::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(115deg,
-        transparent 36%,
-        rgba(255,255,255,0.88) 49%,
-        rgba(255,255,255,0.15) 53%,
-        transparent 66%);
-    transform: translateX(-130%);
-    animation: logoShine 2.7s ease-in-out infinite;
-    pointer-events: none;
-    mix-blend-mode: screen;
-}
-
-@keyframes logo3D {
-    0%, 100% { transform: rotateY(-13deg) rotateX(5deg) scale(0.98); }
-    50% { transform: rotateY(13deg) rotateX(-5deg) scale(1.02); }
-}
-
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-11px); }
-}
-
-@keyframes logoGlow {
-    0%, 100% { opacity: 0.35; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.08); }
-}
-
-@keyframes logoShine {
-    0% { transform: translateX(-130%); }
-    65%, 100% { transform: translateX(130%); }
 }
 
 /* BEKLEME EKRANI */
+
 .timer-circle {
     width: 150px;
     height: 150px;
@@ -196,7 +143,8 @@ p { line-height: 1.7; }
     color: #405b80;
 }
 
-/* RENK EŞLEŞTİRME */
+/* RENK EŞLEŞTİRME STİLLERİ */
+
 #matchingScreen h2 { margin-bottom: 10px; }
 .match-instruction { color: #555; margin-bottom: 30px; }
 
@@ -275,19 +223,8 @@ p { line-height: 1.7; }
     font-weight: bold;
 }
 
-@media (max-width: 480px) {
-    .container { padding: 22px; }
-    .match-area { gap: 15px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .logo-wrapper, .logo-wrapper img,
-    .logo-wrapper::before, .logo-wrapper::after {
-        animation-duration: 8s;
-    }
-}
-
 /* İKİ RESİM ARASINDAKİ FARKI BULMA */
+
 #differenceScreen { max-width: 1100px; }
 
 .difference-images {
@@ -310,7 +247,11 @@ p { line-height: 1.7; }
     line-height: 0;
 }
 
-.diff-image-wrap svg { display: block; width: 100%; height: auto; }
+.diff-image-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
 
 .difference-hotspot {
     position: absolute;
@@ -331,12 +272,26 @@ p { line-height: 1.7; }
     cursor: default;
 }
 
-#differenceStatus { font-weight: bold; color: #405b80; min-height: 24px; }
-#differenceTimer { font-size: 18px; font-weight: bold; color: #405b80; }
+#differenceStatus {
+    font-weight: bold;
+    color: #405b80;
+    min-height: 24px;
+}
+
+@media (max-width: 480px) {
+    .container { padding: 22px; }
+    .match-area { gap: 15px; }
+}
 
 @media (max-width: 600px) {
     .difference-images { grid-template-columns: 1fr; }
     #differenceScreen { padding: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #logoSplash {
+        transition-duration: 1.5s;
+    }
 }
 </style>
 
@@ -345,32 +300,41 @@ p { line-height: 1.7; }
 
 <body>
 
-<!-- GIF LOGO AÇILIŞ EKRANI -->
+<!-- GIF AÇILIŞ EKRANI -->
+
 <div id="logoSplash">
-    <div class="logo-wrapper">
-        <img src="./logo.gif" alt="Üniversite logosu">
-    </div>
+    <img
+        src="logo.gif"
+        alt="Üniversite logosu animasyonu"
+        id="introGif"
+    >
 </div>
 
 <div class="container">
 
     <div id="startScreen">
         <h1>Bellek Deneyi</h1>
+
         <p>
             Birazdan ekranda kelimeler göreceksiniz.
             Kelimeleri dikkatlice inceleyiniz ve aklınızda
             tutmaya çalışınız.
         </p>
+
         <p>
             Her kelime 1,2 saniye boyunca gösterilecektir.
             Her listenin ardından iki resim arasındaki 5 farkı bulma
             görevi, ardından tanıma testi yapılacaktır.
         </p>
+
         <p>
             Tanıma testinde karşınıza çıkan kelimelerden
             daha önce gördüklerinizi belirtmeniz istenecektir.
         </p>
-        <button class="start" onclick="startExperiment()">Deneye Başla</button>
+
+        <button class="start" onclick="startExperiment()">
+            Deneye Başla
+        </button>
     </div>
 
     <div id="presentationScreen" class="hidden">
@@ -381,53 +345,83 @@ p { line-height: 1.7; }
 
     <div id="waitingScreen" class="hidden">
         <h2>Lütfen bekleyiniz...</h2>
-        <p id="waitingMessage">Bir sonraki aşama başlayacaktır.</p>
+
+        <p id="waitingMessage">
+            Bir sonraki aşama başlayacaktır.
+        </p>
+
         <div class="timer-circle">
             <svg viewBox="0 0 150 150">
                 <circle class="timer-background" cx="75" cy="75" r="65"></circle>
                 <circle id="timerProgress" class="timer-progress" cx="75" cy="75" r="65"></circle>
             </svg>
+
             <div id="timerNumber" class="timer-number">30</div>
         </div>
     </div>
 
     <div id="differenceScreen" class="hidden">
         <h2>İki Resim Arasındaki 5 Farkı Bulun</h2>
-        <p>İki resmi dikkatlice karşılaştırınız. Fark olduğunu düşündüğünüz bölgeye sağdaki resim üzerinde tıklayınız.</p>
-        <p id="differenceTimer">Süre: 0,0 sn</p>
+
+        <p>
+            İki resmi dikkatlice karşılaştırınız.
+            Fark olduğunu düşündüğünüz bölgeye sağdaki resim üzerinde tıklayınız.
+        </p>
+
         <div class="difference-images">
+
             <div class="diff-panel">
                 <h3>Resim A</h3>
                 <div class="diff-image-wrap" id="imageA"></div>
             </div>
+
             <div class="diff-panel">
                 <h3>Resim B</h3>
                 <div class="diff-image-wrap" id="imageB"></div>
             </div>
+
         </div>
-        <p id="differenceStatus">Bulunan fark: 0 / 5</p>
+
+        <p id="differenceStatus">
+            Bulunan fark: 0 / 5
+        </p>
     </div>
 
     <div id="testScreen" class="hidden">
         <h2>Tanıma Testi</h2>
-        <p>Bu kelimeyi az önceki listede gördünüz mü?</p>
+
+        <p>
+            Bu kelimeyi az önceki listede gördünüz mü?
+        </p>
+
         <div id="testWord"></div>
+
         <div id="choices">
             <button class="yes" onclick="answer(true)">Gördüm</button>
             <button class="no" onclick="answer(false)">Görmedim</button>
         </div>
+
         <p id="progress"></p>
     </div>
 
     <div id="endScreen" class="hidden">
         <h2>Deney Tamamlandı</h2>
+
         <p>Katılımınız için teşekkür ederiz.</p>
-        <button class="start" onclick="downloadResults()">Sonuçları İndir</button>
+
+        <button class="start" onclick="downloadResults()">
+            Sonuçları Excel Olarak İndir
+        </button>
     </div>
+
 </div>
 
 <script>
-/* KELİME LİSTELERİ */
+
+/* =====================================
+   KELİME LİSTELERİ
+   ===================================== */
+
 const lists = [
     ["Elma", "Şeftali", "Kayısı", "Armut", "Erik"],
     ["Ritim", "Çalgı", "Nota", "Enstürman", "Melodi", "Şarkı"],
@@ -437,7 +431,11 @@ const lists = [
     ["Körfez", "Dalga", "Gemi", "Balık", "Mercan", "Okyanus", "Yosun", "Sahil", "Deniz", "Kum"]
 ];
 
-/* TANIMA TESTLERİ */
+
+/* =====================================
+   TANIMA TESTLERİ
+   ===================================== */
+
 const tests = [
     [
         ["Elma", true], ["Armut", true], ["Kiraz", false], ["Şeftali", true],
@@ -471,7 +469,11 @@ const tests = [
     ]
 ];
 
-/* HER LİSTE İÇİN FARKLI RESİM ÇİFTİ */
+
+/* =====================================
+   RESİM RENK PALETLERİ
+   ===================================== */
+
 const picturePalettes = [
     ["#b9e4ff", "#70b7e8", "#f6d365"],
     ["#d7f0d0", "#86c58b", "#f5b7b1"],
@@ -481,7 +483,11 @@ const picturePalettes = [
     ["#f4d7e8", "#d89bbd", "#a8c5e8"]
 ];
 
-/* DEĞİŞKENLER */
+
+/* =====================================
+   DEĞİŞKENLER
+   ===================================== */
+
 let currentList = 0;
 let currentWord = 0;
 let currentTest = [];
@@ -489,21 +495,32 @@ let currentTestIndex = 0;
 let testStartTime = 0;
 let results = [];
 let participantCode = "";
+
 let foundDifferences = new Set();
 let differenceStartTime = 0;
-let differenceTimerInterval = null;
 let differenceClicks = 0;
 let differenceResults = [];
 
-/* EKRAN DEĞİŞTİRME */
+
+/* =====================================
+   EKRAN DEĞİŞTİRME
+   ===================================== */
+
 function showScreen(id) {
+
     document.querySelectorAll(".container > div")
         .forEach(div => div.classList.add("hidden"));
+
     document.getElementById(id).classList.remove("hidden");
 }
 
-/* DENEYİ BAŞLAT */
+
+/* =====================================
+   DENEYİ BAŞLAT
+   ===================================== */
+
 function startExperiment() {
+
     participantCode = prompt("Katılımcı numarasını giriniz:");
 
     if (!participantCode || !participantCode.trim()) {
@@ -512,18 +529,24 @@ function startExperiment() {
     }
 
     participantCode = participantCode.trim();
+
     currentList = 0;
     currentWord = 0;
     results = [];
     differenceResults = [];
-    clearInterval(differenceTimerInterval);
 
     showScreen("presentationScreen");
+
     showNextWord();
 }
 
-/* KELİMELERİ GÖSTER */
+
+/* =====================================
+   KELİMELERİ GÖSTER
+   ===================================== */
+
 function showNextWord() {
+
     if (currentWord >= lists[currentList].length) {
         startDifferenceGame();
         return;
@@ -539,57 +562,109 @@ function showNextWord() {
         "Kelime " + (currentWord + 1) + " / " + lists[currentList].length;
 
     currentWord++;
+
     setTimeout(showNextWord, 1200);
 }
 
-/* FARK BULMA RESİMLERİNİ OLUŞTUR */
+
+/* =====================================
+   FARK BULMA RESİMLERİNİ OLUŞTUR
+   ===================================== */
+
 function makeScene(listIndex, alternate) {
+
     const palette = picturePalettes[listIndex];
-    const sky = palette[0], ground = palette[1], sun = palette[2];
+
+    const sky = palette[0];
+    const ground = palette[1];
+    const sun = palette[2];
+
     const sunColor = alternate ? "#f28c28" : sun;
     const doorColor = alternate ? "#2878a8" : "#8b5a3c";
+
     const treeFruit = alternate ? `
         <circle cx="458" cy="190" r="8" fill="#e53935"/>
         <circle cx="490" cy="208" r="8" fill="#e53935"/>
         <circle cx="445" cy="225" r="8" fill="#e53935"/>` : `
         <circle cx="458" cy="190" r="8" fill="#e53935"/>
         <circle cx="490" cy="208" r="8" fill="#e53935"/>`;
+
     const cloud = alternate
         ? `<path d="M390 91 Q380 65 407 62 Q420 34 446 57 Q474 49 481 79 Q505 83 496 103 L397 103 Q382 102 390 91" fill="#ffffff"/>`
         : `<path d="M390 91 Q380 65 407 62 Q420 34 446 57 Q474 49 481 79 L397 103 Q382 102 390 91" fill="#ffffff"/>`;
+
     const flowerColor = alternate ? "#9b59b6" : "#f06292";
+
     return `<svg viewBox="0 0 600 360" role="img" aria-label="Renkli bir bahçe ve ev resmi">
+
       <rect width="600" height="360" fill="${sky}"/>
+
       <circle cx="${alternate ? 95 : 80}" cy="75" r="${alternate ? 31 : 25}" fill="${sunColor}"/>
+
       ${cloud}
+
       <rect y="245" width="600" height="115" fill="${ground}"/>
-      <path d="M0 280 Q130 245 250 280 T600 270 V360 H0Z" fill="#6eaa62" opacity=".45"/>
-      <rect x="205" y="155" width="145" height="112" rx="3" fill="#f4e2bd" stroke="#8c7354" stroke-width="4"/>
-      <path d="M188 160 L278 95 L367 160Z" fill="#b65b45" stroke="#804538" stroke-width="4"/>
-      <rect x="264" y="205" width="34" height="62" fill="${doorColor}" stroke="#70452f" stroke-width="3"/>
+
+      <path d="M0 280 Q130 245 250 280 T600 270 V360 H0Z"
+      fill="#6eaa62" opacity=".45"/>
+
+      <rect x="205" y="155" width="145" height="112" rx="3"
+      fill="#f4e2bd" stroke="#8c7354" stroke-width="4"/>
+
+      <path d="M188 160 L278 95 L367 160Z"
+      fill="#b65b45" stroke="#804538" stroke-width="4"/>
+
+      <rect x="264" y="205" width="34" height="62"
+      fill="${doorColor}" stroke="#70452f" stroke-width="3"/>
+
       <circle cx="291" cy="238" r="3" fill="#f7df8b"/>
-      <rect x="220" y="180" width="28" height="27" fill="#a9dcf5" stroke="#806c55" stroke-width="3"/>
-      <path d="M234 180 V207 M220 193 H248" stroke="#806c55" stroke-width="2"/>
+
+      <rect x="220" y="180" width="28" height="27"
+      fill="#a9dcf5" stroke="#806c55" stroke-width="3"/>
+
+      <path d="M234 180 V207 M220 193 H248"
+      stroke="#806c55" stroke-width="2"/>
+
       <rect x="448" y="205" width="20" height="65" fill="#805333"/>
+
       <circle cx="458" cy="172" r="42" fill="#36834a"/>
       <circle cx="430" cy="190" r="28" fill="#459b55"/>
       <circle cx="486" cy="194" r="30" fill="#3d914e"/>
+
       ${treeFruit}
-      <path d="M145 310 V275" stroke="#347b3c" stroke-width="5"/>
+
+      <path d="M145 310 V275"
+      stroke="#347b3c" stroke-width="5"/>
+
       <circle cx="145" cy="269" r="13" fill="${flowerColor}"/>
       <circle cx="145" cy="269" r="5" fill="#f5d547"/>
-      <path d="M110 320 Q120 295 130 320 M160 320 Q170 295 180 320" fill="none" stroke="#347b3c" stroke-width="4"/>
-      <path d="M70 245 Q85 225 100 245 M520 250 Q535 230 550 250" fill="none" stroke="#347b3c" stroke-width="4"/>
+
+      <path d="M110 320 Q120 295 130 320 M160 320 Q170 295 180 320"
+      fill="none" stroke="#347b3c" stroke-width="4"/>
+
+      <path d="M70 245 Q85 225 100 245 M520 250 Q535 230 550 250"
+      fill="none" stroke="#347b3c" stroke-width="4"/>
+
     </svg>`;
 }
 
-/* HER LİSTE SONRASI FARK BULMA OYUNU */
+
+/* =====================================
+   FARK BULMA OYUNU
+   ===================================== */
+
 function startDifferenceGame() {
+
     showScreen("differenceScreen");
+
     foundDifferences = new Set();
     differenceClicks = 0;
-    document.getElementById("imageA").innerHTML = makeScene(currentList, false);
+
+    document.getElementById("imageA").innerHTML =
+        makeScene(currentList, false);
+
     const imageB = document.getElementById("imageB");
+
     imageB.innerHTML = makeScene(currentList, true);
 
     const targets = [
@@ -601,39 +676,50 @@ function startDifferenceGame() {
     ];
 
     targets.forEach(target => {
+
         const button = document.createElement("button");
+
         button.type = "button";
         button.className = "difference-hotspot";
+
         button.style.left = target.x + "%";
         button.style.top = target.y + "%";
+
         button.setAttribute("aria-label", target.label + " farkı");
-        button.addEventListener("click", () => markDifference(target.id, button));
+
+        button.addEventListener("click", () => {
+            markDifference(target.id, button);
+        });
+
         imageB.appendChild(button);
     });
 
-    document.getElementById("differenceStatus").textContent = "Bulunan fark: 0 / 5";
-    differenceStartTime = performance.now();
-    document.getElementById("differenceTimer").textContent = "Süre: 0,0 sn";
-    clearInterval(differenceTimerInterval);
+    document.getElementById("differenceStatus").textContent =
+        "Bulunan fark: 0 / 5";
 
-    differenceTimerInterval = setInterval(() => {
-        const seconds = (performance.now() - differenceStartTime) / 1000;
-        document.getElementById("differenceTimer").textContent =
-            "Süre: " + seconds.toFixed(1).replace(".", ",") + " sn";
-    }, 100);
+    differenceStartTime = performance.now();
 }
 
+
+/* =====================================
+   BULUNAN FARKI KAYDET
+   ===================================== */
+
 function markDifference(id, button) {
+
     if (foundDifferences.has(id)) return;
+
     differenceClicks++;
+
     foundDifferences.add(id);
+
     button.classList.add("found");
 
     document.getElementById("differenceStatus").textContent =
         "Bulunan fark: " + foundDifferences.size + " / 5";
 
     if (foundDifferences.size === 5) {
-        clearInterval(differenceTimerInterval);
+
         const durationMs = performance.now() - differenceStartTime;
 
         differenceResults.push({
@@ -645,9 +731,6 @@ function markDifference(id, button) {
             durationSeconds: Number((durationMs / 1000).toFixed(2))
         });
 
-        document.getElementById("differenceTimer").textContent =
-            "Tamamlandı! Süre: " + (durationMs / 1000).toFixed(1).replace(".", ",") + " sn";
-
         document.getElementById("differenceStatus").textContent =
             "Tüm farkları buldunuz. Tanıma testi başlıyor...";
 
@@ -655,17 +738,31 @@ function markDifference(id, button) {
     }
 }
 
-/* TESTİ BAŞLAT */
+
+/* =====================================
+   TESTİ BAŞLAT
+   ===================================== */
+
 function startTest() {
+
     showScreen("testScreen");
+
     currentTest = [...tests[currentList]];
+
     currentTest.sort(() => Math.random() - 0.5);
+
     currentTestIndex = 0;
+
     showTestWord();
 }
 
-/* TEST KELİMESİNİ GÖSTER */
+
+/* =====================================
+   TEST KELİMESİNİ GÖSTER
+   ===================================== */
+
 function showTestWord() {
+
     if (currentTestIndex >= currentTest.length) {
         finishList();
         return;
@@ -681,88 +778,149 @@ function showTestWord() {
     testStartTime = performance.now();
 }
 
-/* CEVAP AL */
+
+/* =====================================
+   CEVAP AL
+   ===================================== */
+
 function answer(response) {
+
     const responseTime = performance.now() - testStartTime;
+
     const item = currentTest[currentTestIndex];
+
     const correctAnswer = item[1];
+
     const isCorrect = response === correctAnswer;
 
     results.push({
+
         participant: participantCode,
         list: currentList + 1,
         word: item[0],
+
         previouslyShown: correctAnswer,
+
         participantAnswer: response,
+
         correct: isCorrect,
+
         responseTimeMs: responseTime.toFixed(2)
+
     });
 
     currentTestIndex++;
+
     showTestWord();
 }
 
-/* LİSTEYİ BİTİR */
+
+/* =====================================
+   LİSTEYİ BİTİR
+   ===================================== */
+
 function finishList() {
+
     currentList++;
 
     if (currentList >= lists.length) {
+
         showScreen("endScreen");
+
     } else {
+
         startCountdown("Bir sonraki liste başlayacaktır.", function() {
+
             currentWord = 0;
+
             showScreen("presentationScreen");
+
             showNextWord();
+
         });
     }
 }
 
-/* 30 SANİYELİK LİSTELER ARASI BEKLEME */
+
+/* =====================================
+   30 SANİYELİK BEKLEME
+   ===================================== */
+
 function startCountdown(message, callback) {
+
     showScreen("waitingScreen");
+
     document.getElementById("waitingMessage").textContent = message;
 
     let remaining = 30;
+
     const timerNumber = document.getElementById("timerNumber");
+
     const timerProgress = document.getElementById("timerProgress");
+
     const circumference = 2 * Math.PI * 65;
 
     timerProgress.style.strokeDasharray = circumference;
+
     timerProgress.style.strokeDashoffset = 0;
+
     timerNumber.textContent = remaining;
 
     const countdown = setInterval(function() {
+
         remaining--;
+
         timerNumber.textContent = remaining;
 
         const progress = (30 - remaining) / 30;
-        timerProgress.style.strokeDashoffset = circumference * progress;
+
+        timerProgress.style.strokeDashoffset =
+            circumference * progress;
 
         if (remaining <= 0) {
+
             clearInterval(countdown);
+
             callback();
         }
+
     }, 1000);
 }
 
-/* EXCEL OLARAK İNDİR */
+
+/* =====================================
+   EXCEL OLARAK İNDİR
+   ===================================== */
+
 function downloadResults() {
+
     if (typeof XLSX === "undefined") {
+
         alert("Excel dosyası oluşturulamadı. İnternet bağlantınızı kontrol edip tekrar deneyiniz.");
+
         return;
     }
 
     const excelRows = results.map(row => ({
+
         "Katılımcı": row.participant,
+
         "Liste": row.list,
+
         "Kelime": row.word,
+
         "Daha Önce Gösterildi": row.previouslyShown ? "Evet" : "Hayır",
+
         "Katılımcı Cevabı": row.participantAnswer ? "Gördüm" : "Görmedim",
+
         "Doğru/Yanlış": row.correct ? "Doğru" : "Yanlış",
+
         "Tepki Süresi (ms)": Number(row.responseTimeMs)
+
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(excelRows);
+
     const workbook = XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(
@@ -771,26 +929,50 @@ function downloadResults() {
         "Deney Sonuçları"
     );
 
+
+    /* FARK BULMA OYUNU SÜRELERİ */
+
     const gameRows = differenceResults.map(row => ({
+
         "Katılımcı": row.participant,
+
         "Liste": row.list,
+
         "Bulunan Fark": row.differencesFound,
+
         "Tıklama Sayısı": row.clicks,
+
         "Oyun Süresi (saniye)": row.durationSeconds,
+
         "Oyun Süresi (ms)": row.durationMs
+
     }));
 
     const gameWorksheet = XLSX.utils.json_to_sheet(gameRows);
+
     gameWorksheet["!cols"] = [
-        { wch: 15 }, { wch: 10 }, { wch: 15 },
-        { wch: 16 }, { wch: 22 }, { wch: 20 }
+        { wch: 15 },
+        { wch: 10 },
+        { wch: 15 },
+        { wch: 16 },
+        { wch: 22 },
+        { wch: 20 }
     ];
 
-    XLSX.utils.book_append_sheet(workbook, gameWorksheet, "Fark Bulma Süreleri");
+    XLSX.utils.book_append_sheet(
+        workbook,
+        gameWorksheet,
+        "Fark Bulma Süreleri"
+    );
 
     worksheet["!cols"] = [
-        { wch: 15 }, { wch: 10 }, { wch: 20 }, { wch: 23 },
-        { wch: 20 }, { wch: 15 }, { wch: 20 }
+        { wch: 15 },
+        { wch: 10 },
+        { wch: 20 },
+        { wch: 23 },
+        { wch: 20 },
+        { wch: 15 },
+        { wch: 20 }
     ];
 
     XLSX.writeFile(
@@ -799,24 +981,67 @@ function downloadResults() {
     );
 }
 
-/* GIF 5 SANİYE GÖRÜNÜR, SONRA BAŞLANGIÇ EKRANI AÇILIR */
+
+/* =====================================
+   GIF AÇILIŞ VE YUMUŞAK GEÇİŞ
+   ===================================== */
+
 window.addEventListener("load", function() {
+
     const splash = document.getElementById("logoSplash");
-    const logo = splash.querySelector("img");
 
-    // GIF yüklenemezse de açılış ekranının takılı kalmasını önle
-    logo.addEventListener("error", function() {
-        console.error("logo.gif yüklenemedi. Dosya adını ve konumunu kontrol edin.");
-    });
+    const gif = document.getElementById("introGif");
 
-    setTimeout(function() {
-        splash.classList.add("hide");
+    /*
+       GIF'in oynatma süresi.
+       Buradaki 5000 değeri 5 saniyedir.
+       Kendi GIF'inin süresine göre değiştirebilirsin.
+    */
+
+    const gifDuration = 5000;
+
+    function closeIntro() {
 
         setTimeout(function() {
-            splash.style.display = "none";
-        }, 1000);
-    }, 5000);
+
+            splash.classList.add("hide");
+
+            setTimeout(function() {
+
+                splash.style.display = "none";
+
+            }, 1500);
+
+        }, gifDuration);
+    }
+
+    /*
+       GIF yüklendikten sonra açılış sürecini başlat.
+    */
+
+    if (gif.complete && gif.naturalWidth > 0) {
+
+        closeIntro();
+
+    } else {
+
+        gif.addEventListener("load", closeIntro, { once: true });
+
+        gif.addEventListener("error", function() {
+
+            console.error("logo.gif yüklenemedi.");
+
+            splash.classList.add("hide");
+
+            setTimeout(function() {
+                splash.style.display = "none";
+            }, 1500);
+
+        }, { once: true });
+    }
+
 });
+
 </script>
 
 </body>
