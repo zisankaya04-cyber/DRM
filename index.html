@@ -61,7 +61,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 #progress { color: #555; font-size: 14px; }
 p { line-height: 1.7; }
 
-/* 5 SANİYELİK 3B LOGO AÇILIŞI */
+/* GIF AÇILIŞ EKRANI */
 #logoSplash {
     position: fixed;
     inset: 0;
@@ -289,14 +289,17 @@ p { line-height: 1.7; }
 
 /* İKİ RESİM ARASINDAKİ FARKI BULMA */
 #differenceScreen { max-width: 1100px; }
+
 .difference-images {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin: 22px 0 12px;
 }
+
 .diff-panel { min-width: 0; }
 .diff-panel h3 { margin: 5px 0 10px; color: #405b80; }
+
 .diff-image-wrap {
     position: relative;
     width: 100%;
@@ -306,7 +309,9 @@ p { line-height: 1.7; }
     background: #eef2f8;
     line-height: 0;
 }
+
 .diff-image-wrap svg { display: block; width: 100%; height: auto; }
+
 .difference-hotspot {
     position: absolute;
     width: 11%;
@@ -319,18 +324,20 @@ p { line-height: 1.7; }
     margin: 0;
     cursor: crosshair;
 }
+
 .difference-hotspot.found {
     border-color: #16834a;
     background: rgba(28, 190, 100, .22);
     cursor: default;
 }
+
 #differenceStatus { font-weight: bold; color: #405b80; min-height: 24px; }
 #differenceTimer { font-size: 18px; font-weight: bold; color: #405b80; }
+
 @media (max-width: 600px) {
     .difference-images { grid-template-columns: 1fr; }
     #differenceScreen { padding: 18px; }
 }
-
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -338,10 +345,10 @@ p { line-height: 1.7; }
 
 <body>
 
-<!-- LOGO AÇILIŞ EKRANI -->
+<!-- GIF LOGO AÇILIŞ EKRANI -->
 <div id="logoSplash">
     <div class="logo-wrapper">
-        <img src="arkaplan(1).jpg" alt="Üniversite logosu">
+        <img src="./logo.gif" alt="Üniversite logosu">
     </div>
 </div>
 
@@ -585,7 +592,6 @@ function startDifferenceGame() {
     const imageB = document.getElementById("imageB");
     imageB.innerHTML = makeScene(currentList, true);
 
-    // Tıklanabilir bölgeler: güneş, bulut, kapı, ağaç ve çiçek
     const targets = [
         {id: 0, x: 14, y: 21, label: "Güneş"},
         {id: 1, x: 73, y: 23, label: "Bulut"},
@@ -593,6 +599,7 @@ function startDifferenceGame() {
         {id: 3, x: 77, y: 57, label: "Ağaç"},
         {id: 4, x: 24, y: 77, label: "Çiçek"}
     ];
+
     targets.forEach(target => {
         const button = document.createElement("button");
         button.type = "button";
@@ -608,6 +615,7 @@ function startDifferenceGame() {
     differenceStartTime = performance.now();
     document.getElementById("differenceTimer").textContent = "Süre: 0,0 sn";
     clearInterval(differenceTimerInterval);
+
     differenceTimerInterval = setInterval(() => {
         const seconds = (performance.now() - differenceStartTime) / 1000;
         document.getElementById("differenceTimer").textContent =
@@ -620,12 +628,14 @@ function markDifference(id, button) {
     differenceClicks++;
     foundDifferences.add(id);
     button.classList.add("found");
+
     document.getElementById("differenceStatus").textContent =
         "Bulunan fark: " + foundDifferences.size + " / 5";
 
     if (foundDifferences.size === 5) {
         clearInterval(differenceTimerInterval);
         const durationMs = performance.now() - differenceStartTime;
+
         differenceResults.push({
             participant: participantCode,
             list: currentList + 1,
@@ -634,10 +644,13 @@ function markDifference(id, button) {
             durationMs: Number(durationMs.toFixed(2)),
             durationSeconds: Number((durationMs / 1000).toFixed(2))
         });
+
         document.getElementById("differenceTimer").textContent =
             "Tamamlandı! Süre: " + (durationMs / 1000).toFixed(1).replace(".", ",") + " sn";
+
         document.getElementById("differenceStatus").textContent =
             "Tüm farkları buldunuz. Tanıma testi başlıyor...";
+
         setTimeout(startTest, 1200);
     }
 }
@@ -766,11 +779,13 @@ function downloadResults() {
         "Oyun Süresi (saniye)": row.durationSeconds,
         "Oyun Süresi (ms)": row.durationMs
     }));
+
     const gameWorksheet = XLSX.utils.json_to_sheet(gameRows);
     gameWorksheet["!cols"] = [
         { wch: 15 }, { wch: 10 }, { wch: 15 },
         { wch: 16 }, { wch: 22 }, { wch: 20 }
     ];
+
     XLSX.utils.book_append_sheet(workbook, gameWorksheet, "Fark Bulma Süreleri");
 
     worksheet["!cols"] = [
@@ -784,10 +799,17 @@ function downloadResults() {
     );
 }
 
-/* LOGO 5 SANİYE GÖRÜNÜR, SONRA BAŞLANGIÇ EKRANI AÇILIR */
+/* GIF 5 SANİYE GÖRÜNÜR, SONRA BAŞLANGIÇ EKRANI AÇILIR */
 window.addEventListener("load", function() {
+    const splash = document.getElementById("logoSplash");
+    const logo = splash.querySelector("img");
+
+    // GIF yüklenemezse de açılış ekranının takılı kalmasını önle
+    logo.addEventListener("error", function() {
+        console.error("logo.gif yüklenemedi. Dosya adını ve konumunu kontrol edin.");
+    });
+
     setTimeout(function() {
-        const splash = document.getElementById("logoSplash");
         splash.classList.add("hide");
 
         setTimeout(function() {
