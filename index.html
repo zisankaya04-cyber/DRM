@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -61,100 +62,33 @@ button:disabled { opacity: 0.5; cursor: default; }
 #progress { color: #555; font-size: 14px; }
 p { line-height: 1.7; }
 
-/* LOGO AÇILIŞ EKRANI */
+/* TAM EKRAN GIF AÇILIŞ EKRANI */
 #logoSplash {
     position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 9999;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, #ffffff 45%, #e9edf5 100%);
-    perspective: 1100px;
     opacity: 1;
     visibility: visible;
     transition: opacity 1s ease, visibility 1s ease;
+}
+
+#logoSplash img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #logoSplash.hide {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-}
-
-.logo-wrapper {
-    position: relative;
-    width: min(78vw, 430px);
-    aspect-ratio: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-    animation: logoFloat 2.5s ease-in-out infinite;
-}
-
-.logo-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 50%;
-    backface-visibility: visible;
-    transform-style: preserve-3d;
-    animation: logo3D 3.2s ease-in-out infinite;
-    filter:
-        drop-shadow(0 0 7px rgba(255,255,255,0.95))
-        drop-shadow(0 0 15px rgba(64,91,128,0.55))
-        drop-shadow(0 0 28px rgba(255,215,100,0.45));
-}
-
-.logo-wrapper::before {
-    content: "";
-    position: absolute;
-    inset: -10%;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-        rgba(255,255,255,0) 38%,
-        rgba(255,215,100,0.28) 58%,
-        rgba(100,150,220,0.18) 68%,
-        rgba(255,255,255,0) 76%);
-    animation: logoGlow 1.8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.logo-wrapper::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(115deg,
-        transparent 36%,
-        rgba(255,255,255,0.88) 49%,
-        rgba(255,255,255,0.15) 53%,
-        transparent 66%);
-    transform: translateX(-130%);
-    animation: logoShine 2.7s ease-in-out infinite;
-    pointer-events: none;
-    mix-blend-mode: screen;
-}
-
-@keyframes logo3D {
-    0%, 100% { transform: rotateY(-13deg) rotateX(5deg) scale(0.98); }
-    50% { transform: rotateY(13deg) rotateX(-5deg) scale(1.02); }
-}
-
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-11px); }
-}
-
-@keyframes logoGlow {
-    0%, 100% { opacity: 0.35; transform: scale(0.95); }
-    50% { opacity: 1; transform: scale(1.08); }
-}
-
-@keyframes logoShine {
-    0% { transform: translateX(-130%); }
-    65%, 100% { transform: translateX(130%); }
 }
 
 /* BEKLEME EKRANI */
@@ -276,7 +210,9 @@ p { line-height: 1.7; }
 }
 
 /* FARK BULMA OYUNU */
-#differenceScreen { max-width: 1100px; }
+#differenceScreen {
+    max-width: 1100px;
+}
 
 .difference-images {
     display: grid;
@@ -286,7 +222,10 @@ p { line-height: 1.7; }
 }
 
 .diff-panel { min-width: 0; }
-.diff-panel h3 { margin: 5px 0 10px; color: #405b80; }
+.diff-panel h3 {
+    margin: 5px 0 10px;
+    color: #405b80;
+}
 
 .diff-image-wrap {
     position: relative;
@@ -304,22 +243,29 @@ p { line-height: 1.7; }
     height: auto;
 }
 
+/* BÜYÜTÜLMÜŞ FARK TIKLAMA ALANLARI */
 .difference-hotspot {
     position: absolute;
-    width: 11%;
-    aspect-ratio: 1;
+    width: 19%;
+    height: 22%;
     transform: translate(-50%, -50%);
     border: 2px solid transparent;
-    border-radius: 50%;
-    background: transparent;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.04);
     padding: 0;
     margin: 0;
     cursor: crosshair;
+    z-index: 5;
+}
+
+.difference-hotspot:hover {
+    background: rgba(64,91,128,0.16);
+    border-color: rgba(64,91,128,0.5);
 }
 
 .difference-hotspot.found {
-    border-color: #16834a;
-    background: rgba(28, 190, 100, .22);
+    border: 3px solid #16834a;
+    background: rgba(28,190,100,0.25);
     cursor: default;
 }
 
@@ -338,13 +284,6 @@ p { line-height: 1.7; }
     .container { padding: 22px; }
     .match-area { gap: 15px; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-    .logo-wrapper, .logo-wrapper img,
-    .logo-wrapper::before, .logo-wrapper::after {
-        animation-duration: 8s;
-    }
-}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -352,11 +291,9 @@ p { line-height: 1.7; }
 
 <body>
 
-<!-- LOGO AÇILIŞ EKRANI -->
+<!-- GIF AÇILIŞ EKRANI -->
 <div id="logoSplash">
-    <div class="logo-wrapper">
-        <img src="arkaplan.jpg" alt="Üniversite logosu">
-    </div>
+    <img src="logo.gif" alt="Açılış animasyonu">
 </div>
 
 <div class="container">
@@ -400,7 +337,10 @@ p { line-height: 1.7; }
 
     <div id="differenceScreen" class="hidden">
         <h2>İki Resim Arasındaki 5 Farkı Bulun</h2>
-        <p>İki resmi dikkatlice karşılaştırınız. Fark olduğunu düşündüğünüz bölgeye sağdaki resim üzerinde tıklayınız.</p>
+        <p>
+            İki resmi dikkatlice karşılaştırınız.
+            Fark olduğunu düşündüğünüz bölgeye sağdaki resim üzerinde tıklayınız.
+        </p>
 
         <div class="difference-images">
             <div class="diff-panel">
@@ -714,17 +654,69 @@ function startDifferenceGame() {
     const imageB = document.getElementById("imageB");
     imageB.innerHTML = makeScene(currentList, true);
 
-    /*
-      Fark bölgeleri resimlerin aynı koordinatlarında tutulur.
-      Her resim çiftinde 5 farklılık bu bölgelerde bulunur.
-    */
-    const targets = [
-        {id: 0, x: 14, y: 21, label: "Üst sol"},
-        {id: 1, x: 73, y: 23, label: "Üst sağ"},
-        {id: 2, x: 47, y: 66, label: "Orta"},
-        {id: 3, x: 77, y: 57, label: "Sağ alt"},
-        {id: 4, x: 24, y: 77, label: "Sol alt"}
+    /* LİSTEYE GÖRE FARK TIKLAMA KONUMU */
+    const targetPositions = [
+        // Bahçe
+        [
+            {x: 14, y: 21},
+            {x: 74, y: 23},
+            {x: 47, y: 66},
+            {x: 81, y: 58},
+            {x: 24, y: 75}
+        ],
+
+        // Müzik odası
+        [
+            {x: 13, y: 21},
+            {x: 74, y: 23},
+            {x: 80, y: 64},
+            {x: 22, y: 60},
+            {x: 80, y: 22}
+        ],
+
+        // Mutfak
+        [
+            {x: 13, y: 21},
+            {x: 74, y: 27},
+            {x: 49, y: 57},
+            {x: 80, y: 62},
+            {x: 18, y: 57}
+        ],
+
+        // Hastane
+        [
+            {x: 13, y: 21},
+            {x: 74, y: 25},
+            {x: 48, y: 61},
+            {x: 80, y: 60},
+            {x: 18, y: 60}
+        ],
+
+        // Uzay
+        [
+            {x: 13, y: 21},
+            {x: 65, y: 21},
+            {x: 47, y: 53},
+            {x: 80, y: 65},
+            {x: 21, y: 72}
+        ],
+
+        // Deniz
+        [
+            {x: 13, y: 21},
+            {x: 37, y: 53},
+            {x: 80, y: 80},
+            {x: 75, y: 27},
+            {x: 22, y: 86}
+        ]
     ];
+
+    const targets = targetPositions[currentList].map((position, index) => ({
+        id: index,
+        x: position.x,
+        y: position.y,
+        label: "Fark " + (index + 1)
+    }));
 
     targets.forEach(target => {
         const button = document.createElement("button");
@@ -732,7 +724,7 @@ function startDifferenceGame() {
         button.className = "difference-hotspot";
         button.style.left = target.x + "%";
         button.style.top = target.y + "%";
-        button.setAttribute("aria-label", target.label + " farkı");
+        button.setAttribute("aria-label", target.label);
         button.addEventListener("click", () => markDifference(target.id, button));
         imageB.appendChild(button);
     });
@@ -936,865 +928,7 @@ function downloadResults() {
     );
 }
 
-/* LOGO 5 SANİYE GÖRÜNÜR, SONRA BAŞLANGIÇ EKRANI AÇI
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DRM Bellek Deneyi</title>
-
-<style>
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background-image: url("arkaplan.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.container {
-    background: rgba(255,255,255,0.93);
-    width: 90%;
-    max-width: 650px;
-    padding: 35px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-}
-
-.hidden { display: none !important; }
-h1 { font-size: 26px; }
-
-#presentationWord, #testWord {
-    font-size: 40px;
-    font-weight: bold;
-    margin: 65px 0;
-    min-height: 50px;
-}
-
-button {
-    padding: 15px 28px;
-    border: none;
-    border-radius: 9px;
-    color: white;
-    font-size: 17px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-button:disabled { opacity: 0.5; cursor: default; }
-.start { background: #405b80; }
-.yes { background: #327a59; }
-.no { background: #a34d4d; }
-#choices { margin-top: 35px; }
-#progress { color: #555; font-size: 14px; }
-p { line-height: 1.7; }
-
-/* TAM EKRAN GIF AÇILIŞ EKRANI */
-#logoSplash {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-
-#logoSplash img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-#logoSplash.hide {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* BEKLEME EKRANI */
-.timer-circle {
-    width: 150px;
-    height: 150px;
-    margin: 25px auto;
-    position: relative;
-}
-
-.timer-circle svg {
-    width: 150px;
-    height: 150px;
-    transform: rotate(-90deg);
-}
-
-.timer-circle circle {
-    fill: none;
-    stroke-width: 10;
-}
-
-.timer-background { stroke: #dddddd; }
-
-.timer-progress {
-    stroke: #405b80;
-    stroke-linecap: round;
-    stroke-dasharray: 408.4;
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s linear;
-}
-
-.timer-number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 38px;
-    font-weight: bold;
-    color: #405b80;
-}
-
-/* RENK EŞLEŞTİRME STİLLERİ */
-#matchingScreen h2 { margin-bottom: 10px; }
-.match-instruction { color: #555; margin-bottom: 30px; }
-
-.match-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    max-width: 450px;
-    margin: 0 auto;
-}
-
-.lines-column, .balls-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 25px;
-    flex: 1;
-}
-
-.line-target {
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    border: 2px dashed transparent;
-    transition: background 0.2s;
-}
-
-.color-line {
-    width: 100%;
-    height: 7px;
-    border-radius: 10px;
-}
-
-.line-target.matched {
-    background: rgba(50,122,89,0.12);
-    border-color: #327a59;
-}
-
-.line-target.wrong { background: rgba(163,77,77,0.12); }
-
-.color-ball {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 3px solid rgba(0,0,0,0.08);
-    cursor: grab;
-    margin: 0 auto;
-    touch-action: none;
-    user-select: none;
-    transition: transform 0.15s, opacity 0.2s;
-}
-
-.color-ball:active {
-    cursor: grabbing;
-    transform: scale(1.12);
-}
-
-.color-ball.selected {
-    outline: 4px solid #405b80;
-    outline-offset: 4px;
-    transform: scale(1.1);
-}
-
-.color-ball.matched {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.match-message {
-    min-height: 25px;
-    margin-top: 25px;
-    color: #327a59;
-    font-weight: bold;
-}
-
-/* FARK BULMA OYUNU */
-#differenceScreen { max-width: 1100px; }
-
-.difference-images {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin: 22px 0 12px;
-}
-
-.diff-panel { min-width: 0; }
-.diff-panel h3 { margin: 5px 0 10px; color: #405b80; }
-
-.diff-image-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border: 2px solid #d6dce5;
-    border-radius: 12px;
-    background: #eef2f8;
-    line-height: 0;
-}
-
-.diff-image-wrap svg {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.difference-hotspot {
-    position: absolute;
-    width: 11%;
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border: 2px solid transparent;
-    border-radius: 50%;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    cursor: crosshair;
-}
-
-.difference-hotspot.found {
-    border-color: #16834a;
-    background: rgba(28, 190, 100, .22);
-    cursor: default;
-}
-
-#differenceStatus {
-    font-weight: bold;
-    color: #405b80;
-    min-height: 24px;
-}
-
-@media (max-width: 600px) {
-    .difference-images { grid-template-columns: 1fr; }
-    #differenceScreen { padding: 18px; }
-}
-
-@media (max-width: 480px) {
-    .container { padding: 22px; }
-    .match-area { gap: 15px; }
-}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-</head>
-
-<body>
-
-<!-- YALNIZCA GIF AÇILIŞ EKRANI -->
-<div id="logoSplash">
-    <img src="logo.gif" alt="Açılış animasyonu">
-</div>
-
-<div class="container">
-
-    <div id="startScreen">
-        <h1>Bellek Deneyi</h1>
-        <p>
-            Birazdan ekranda kelimeler göreceksiniz.
-            Kelimeleri dikkatlice inceleyiniz ve aklınızda
-            tutmaya çalışınız.
-        </p>
-        <p>
-            Her kelime 1,2 saniye boyunca gösterilecektir.
-            Her listenin ardından iki resim arasındaki 5 farkı bulma
-            görevi, ardından tanıma testi yapılacaktır.
-        </p>
-        <p>
-            Tanıma testinde karşınıza çıkan kelimelerden
-            daha önce gördüklerinizi belirtmeniz istenecektir.
-        </p>
-        <button class="start" onclick="startExperiment()">Deneye Başla</button>
-    </div>
-
-    <div id="presentationScreen" class="hidden">
-        <h2 id="listNumber"></h2>
-        <div id="presentationWord"></div>
-        <p id="presentationProgress"></p>
-    </div>
-
-    <div id="waitingScreen" class="hidden">
-        <h2>Lütfen bekleyiniz...</h2>
-        <p id="waitingMessage">Bir sonraki aşama başlayacaktır.</p>
-        <div class="timer-circle">
-            <svg viewBox="0 0 150 150">
-                <circle class="timer-background" cx="75" cy="75" r="65"></circle>
-                <circle id="timerProgress" class="timer-progress" cx="75" cy="75" r="65"></circle>
-            </svg>
-            <div id="timerNumber" class="timer-number">30</div>
-        </div>
-    </div>
-
-    <div id="differenceScreen" class="hidden">
-        <h2>İki Resim Arasındaki 5 Farkı Bulun</h2>
-        <p>İki resmi dikkatlice karşılaştırınız. Fark olduğunu düşündüğünüz bölgeye sağdaki resim üzerinde tıklayınız.</p>
-
-        <div class="difference-images">
-            <div class="diff-panel">
-                <h3>Resim A</h3>
-                <div class="diff-image-wrap" id="imageA"></div>
-            </div>
-
-            <div class="diff-panel">
-                <h3>Resim B</h3>
-                <div class="diff-image-wrap" id="imageB"></div>
-            </div>
-        </div>
-
-        <p id="differenceStatus">Bulunan fark: 0 / 5</p>
-    </div>
-
-    <div id="testScreen" class="hidden">
-        <h2>Tanıma Testi</h2>
-        <p>Bu kelimeyi az önceki listede gördünüz mü?</p>
-        <div id="testWord"></div>
-
-        <div id="choices">
-            <button class="yes" onclick="answer(true)">Gördüm</button>
-            <button class="no" onclick="answer(false)">Görmedim</button>
-        </div>
-
-        <p id="progress"></p>
-    </div>
-
-    <div id="endScreen" class="hidden">
-        <h2>Deney Tamamlandı</h2>
-        <p>Katılımınız için teşekkür ederiz.</p>
-        <button class="start" onclick="downloadResults()">Sonuçları Excel Olarak İndir</button>
-    </div>
-
-</div>
-
-<script>
-
-/* KELİME LİSTELERİ */
-const lists = [
-    ["Elma", "Şeftali", "Kayısı", "Armut", "Erik"],
-    ["Ritim", "Çalgı", "Nota", "Enstürman", "Melodi", "Şarkı"],
-    ["Tabak", "Kaşık", "Bıçak", "Bardak", "Tencere", "Çatal", "Tava"],
-    ["İlaç", "Serum", "Doktor", "Hemşire", "Tedavi", "Ameliyat", "Sağlık", "Hasta"],
-    ["Güneş", "Uydu", "Yıldız", "Dünya", "Yörünge", "Meteor", "Astronot", "Neptün", "Galaksi"],
-    ["Körfez", "Dalga", "Gemi", "Balık", "Mercan", "Okyanus", "Yosun", "Sahil", "Deniz", "Kum"]
-];
-
-/* TANIMA TESTLERİ */
-const tests = [
-    [
-        ["Elma", true], ["Armut", true], ["Kiraz", false], ["Şeftali", true],
-        ["Sebze", false], ["Kayısı", true], ["Meyve", false], ["Erik", true]
-    ],
-    [
-        ["Çalgı", true], ["Nota", true], ["Dans", false], ["Şarkı", true],
-        ["Melodi", true], ["Ritim", true], ["Sahne", false],
-        ["Enstrüman", true], ["Müzik", false]
-    ],
-    [
-        ["Tabak", true], ["Kaşık", true], ["Mutfak", false], ["Çatal", true],
-        ["Bıçak", true], ["Bardak", true], ["Kupa", false], ["Ev", false],
-        ["Tencere", true], ["Tava", true]
-    ],
-    [
-        ["Doktor", true], ["Hastane", false], ["İlaç", true], ["Hemşire", true],
-        ["Hasta", true], ["Tedavi", true], ["Eczane", false],
-        ["Ameliyat", true], ["Meslek", false], ["Serum", true], ["Sağlık", true]
-    ],
-    [
-        ["Gezegen", false], ["Galaksi", true], ["Uzay", false], ["Neptün", true],
-        ["Dünya", true], ["Yıldız", true], ["Güneş", true], ["Meteor", true],
-        ["Astronot", true], ["Uydu", true], ["Yörünge", true], ["Canlı", false]
-    ],
-    [
-        ["Deniz", true], ["Dalga", true], ["Göl", false], ["Kum", true],
-        ["Sahil", true], ["Gemi", true], ["Balık", true], ["İçecek", false],
-        ["Okyanus", true], ["Mercan", true], ["Sörf", false],
-        ["Körfez", true], ["Yosun", true]
-    ]
-];
-
-/* DEĞİŞKENLER */
-let currentList = 0;
-let currentWord = 0;
-let currentTest = [];
-let currentTestIndex = 0;
-let testStartTime = 0;
-let results = [];
-let participantCode = "";
-let foundDifferences = new Set();
-let differenceStartTime = 0;
-let differenceClicks = 0;
-let differenceResults = [];
-
-/* EKRAN DEĞİŞTİRME */
-function showScreen(id) {
-    document.querySelectorAll(".container > div")
-        .forEach(div => div.classList.add("hidden"));
-
-    document.getElementById(id).classList.remove("hidden");
-}
-
-/* DENEYİ BAŞLAT */
-function startExperiment() {
-    participantCode = prompt("Katılımcı numarasını giriniz:");
-
-    if (!participantCode || !participantCode.trim()) {
-        alert("Lütfen bir katılımcı numarası giriniz.");
-        return;
-    }
-
-    participantCode = participantCode.trim();
-    currentList = 0;
-    currentWord = 0;
-    results = [];
-    differenceResults = [];
-
-    showScreen("presentationScreen");
-    showNextWord();
-}
-
-/* KELİMELERİ GÖSTER */
-function showNextWord() {
-    if (currentWord >= lists[currentList].length) {
-        startDifferenceGame();
-        return;
-    }
-
-    document.getElementById("listNumber").textContent =
-        "Liste " + (currentList + 1);
-
-    document.getElementById("presentationWord").textContent =
-        lists[currentList][currentWord];
-
-    document.getElementById("presentationProgress").textContent =
-        "Kelime " + (currentWord + 1) + " / " + lists[currentList].length;
-
-    currentWord++;
-    setTimeout(showNextWord, 1200);
-}
-
-/* SVG RESİM YARDIMCISI */
-function svgStart(background) {
-    return `
-    <svg viewBox="0 0 600 360" role="img" aria-label="Fark bulma resmi">
-    <rect width="600" height="360" fill="${background}"/>`;
-}
-
-/* 1. BAHÇE VE EV */
-function gardenScene(alternate) {
-    return svgStart("#b9e4ff") + `
-    <circle cx="${alternate ? 95 : 80}" cy="75" r="27" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <path d="${alternate ? "M390 91 Q380 65 407 62 Q420 34 446 57 Q474 49 481 79 Q505 83 496 103 L397 103 Q382 102 390 91" : "M390 91 Q380 65 407 62 Q420 34 446 57 Q474 49 481 79 L397 103 Q382 102 390 91"}" fill="white"/>
-    <rect y="245" width="600" height="115" fill="#70b7a0"/>
-    <path d="M0 280 Q130 245 250 280 T600 270 V360 H0Z" fill="#6eaa62" opacity=".45"/>
-    <rect x="205" y="155" width="145" height="112" fill="#f4e2bd" stroke="#8c7354" stroke-width="4"/>
-    <path d="M188 160 L278 95 L367 160Z" fill="#b65b45" stroke="#804538" stroke-width="4"/>
-    <rect x="264" y="205" width="34" height="62" fill="${alternate ? "#2878a8" : "#8b5a3c"}" stroke="#70452f" stroke-width="3"/>
-    <circle cx="291" cy="238" r="3" fill="#f7df8b"/>
-    <rect x="220" y="180" width="28" height="27" fill="#a9dcf5" stroke="#806c55" stroke-width="3"/>
-    <path d="M234 180 V207 M220 193 H248" stroke="#806c55" stroke-width="2"/>
-    <rect x="448" y="205" width="20" height="65" fill="#805333"/>
-    <circle cx="458" cy="172" r="42" fill="#36834a"/>
-    <circle cx="430" cy="190" r="28" fill="#459b55"/>
-    <circle cx="486" cy="194" r="30" fill="#3d914e"/>
-    <circle cx="458" cy="190" r="8" fill="#e53935"/>
-    <circle cx="490" cy="208" r="8" fill="#e53935"/>
-    ${alternate ? `<circle cx="445" cy="225" r="8" fill="#e53935"/>` : ""}
-    <path d="M145 310 V275" stroke="#347b3c" stroke-width="5"/>
-    <circle cx="145" cy="269" r="13" fill="${alternate ? "#9b59b6" : "#f06292"}"/>
-    <circle cx="145" cy="269" r="5" fill="#f5d547"/>
-    <path d="M110 320 Q120 295 130 320 M160 320 Q170 295 180 320" fill="none" stroke="#347b3c" stroke-width="4"/>
-    </svg>`;
-}
-
-/* 2. MÜZİK ODASI */
-function musicScene(alternate) {
-    return svgStart("#e8d9f5") + `
-    <rect y="270" width="600" height="90" fill="#9b83b8"/>
-    <circle cx="80" cy="75" r="${alternate ? 33 : 25}" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <rect x="390" y="45" width="105" height="${alternate ? 75 : 60}" rx="8" fill="#fff4d6" stroke="#8d6e63" stroke-width="5"/>
-    <path d="M410 80 Q435 45 460 80 Q480 100 470 105 L405 105Z" fill="#8bc6ec"/>
-    <rect x="180" y="180" width="245" height="95" rx="8" fill="#543b35" stroke="#2d2525" stroke-width="5"/>
-    <rect x="195" y="195" width="215" height="60" fill="#fff"/>
-    ${Array.from({length: 12}, (_,i) => `<rect x="${202+i*17}" y="195" width="10" height="35" fill="#222"/>`).join("")}
-    <rect x="210" y="255" width="12" height="35" fill="#543b35"/>
-    <rect x="380" y="255" width="12" height="35" fill="#543b35"/>
-    <rect x="455" y="180" width="55" height="100" rx="8" fill="#35465d"/>
-    <circle cx="482" cy="210" r="${alternate ? 18 : 13}" fill="#a7b4c6"/>
-    <circle cx="482" cy="250" r="10" fill="#a7b4c6"/>
-    <path d="M130 280 V225" stroke="#77543a" stroke-width="7"/>
-    <circle cx="130" cy="215" r="17" fill="${alternate ? "#e05b85" : "#f3a6c8"}"/>
-    <circle cx="130" cy="215" r="6" fill="#ffe07b"/>
-    <path d="M85 115 Q100 90 115 115 M115 115 Q130 90 145 115" stroke="#fff" stroke-width="7" fill="none"/>
-    </svg>`;
-}
-
-/* 3. MUTFAK */
-function kitchenScene(alternate) {
-    return svgStart("#f8dfb5") + `
-    <rect y="260" width="600" height="100" fill="#d69b6b"/>
-    <circle cx="80" cy="75" r="${alternate ? 33 : 25}" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <rect x="385" y="45" width="115" height="${alternate ? 100 : 80}" fill="#fff7e8" stroke="#b38b68" stroke-width="5"/>
-    <path d="M405 70 H480 M405 90 H480" stroke="#d7b58c" stroke-width="5"/>
-    <rect x="150" y="155" width="300" height="115" rx="10" fill="#c98b55" stroke="#815a3c" stroke-width="5"/>
-    <rect x="165" y="170" width="270" height="80" fill="#f4d5a7"/>
-    <ellipse cx="295" cy="205" rx="65" ry="35" fill="#fff" stroke="#9aa4aa" stroke-width="5"/>
-    <ellipse cx="295" cy="205" rx="40" ry="20" fill="#e9f3f7"/>
-    <path d="M265 205 Q295 ${alternate ? 165 : 175} 325 205" fill="none" stroke="#e0a13c" stroke-width="7"/>
-    <rect x="465" y="190" width="40" height="75" rx="5" fill="#9ba9b2"/>
-    <rect x="455" y="180" width="60" height="12" rx="5" fill="#657780"/>
-    <circle cx="485" cy="220" r="${alternate ? 13 : 8}" fill="#e7f4f8"/>
-    <path d="M110 270 V215" stroke="#815a3c" stroke-width="8"/>
-    <circle cx="110" cy="205" r="22" fill="${alternate ? "#78b86a" : "#e76f51"}"/>
-    <path d="M95 205 Q110 185 125 205" fill="none" stroke="#fff" stroke-width="4"/>
-    <rect x="70" y="275" width="85" height="20" rx="5" fill="#f4e8d1"/>
-    </svg>`;
-}
-
-/* 4. HASTANE ODASI */
-function hospitalScene(alternate) {
-    return svgStart("#d9e6f5") + `
-    <rect y="270" width="600" height="90" fill="#a9c3d6"/>
-    <circle cx="80" cy="75" r="${alternate ? 33 : 25}" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <rect x="390" y="45" width="110" height="95" rx="6" fill="#f8fbff" stroke="#8da8bd" stroke-width="5"/>
-    <path d="M410 90 H480 M445 65 V115" stroke="#d94e4e" stroke-width="${alternate ? 13 : 8}"/>
-    <rect x="145" y="185" width="300" height="75" rx="8" fill="#f7f9fc" stroke="#71899b" stroke-width="5"/>
-    <rect x="165" y="165" width="90" height="35" rx="10" fill="#fff"/>
-    <rect x="260" y="195" width="160" height="45" rx="5" fill="#8fc7e8"/>
-    <path d="M160 260 V295 M420 260 V295" stroke="#657d8f" stroke-width="9"/>
-    <rect x="455" y="185" width="55" height="90" rx="5" fill="#d9e5ed" stroke="#8299aa" stroke-width="4"/>
-    <circle cx="482" cy="215" r="${alternate ? 15 : 10}" fill="#75b6d5"/>
-    <rect x="475" y="240" width="15" height="22" fill="#fff"/>
-    <path d="M110 280 V225" stroke="#4f8c62" stroke-width="7"/>
-    <circle cx="110" cy="215" r="20" fill="${alternate ? "#f0a1bd" : "#8fcf9b"}"/>
-    <circle cx="110" cy="215" r="7" fill="#f6d365"/>
-    <rect x="70" y="285" width="80" height="10" fill="#f7f9fc"/>
-    </svg>`;
-}
-
-/* 5. UZAY */
-function spaceScene(alternate) {
-    return svgStart("#18294e") + `
-    <circle cx="80" cy="75" r="${alternate ? 33 : 25}" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <circle cx="390" cy="75" r="${alternate ? 35 : 25}" fill="#fff"/>
-    <circle cx="380" cy="68" r="5" fill="#18294e"/>
-    <circle cx="400" cy="82" r="5" fill="#18294e"/>
-    <circle cx="280" cy="190" r="70" fill="#4d91c6"/>
-    <path d="M235 160 Q260 130 285 165 Q310 185 335 150 L340 220 Q300 260 250 225Z" fill="#67a66a"/>
-    <path d="M150 270 L220 170 L290 270Z" fill="#8e9db5" opacity=".7"/>
-    <path d="M150 270 L220 170 L290 270" fill="none" stroke="#c8d3e5" stroke-width="5"/>
-    <path d="M455 220 L480 150 L505 220Z" fill="#e05b50"/>
-    <rect x="465" y="215" width="30" height="55" rx="12" fill="#f3f5fa"/>
-    <path d="M465 245 L445 270 L465 265 M495 245 L515 270 L495 265" fill="#e05b50"/>
-    <circle cx="480" cy="230" r="${alternate ? 12 : 8}" fill="#6fb6db"/>
-    <path d="M110 290 L125 260 L140 290Z" fill="${alternate ? "#f0a1bd" : "#f3d36a"}"/>
-    <circle cx="125" cy="250" r="12" fill="#fff"/>
-    <path d="M125 240 V260 M115 250 H135" stroke="#18294e" stroke-width="3"/>
-    <circle cx="520" cy="55" r="3" fill="#fff"/>
-    <circle cx="45" cy="180" r="3" fill="#fff"/>
-    <circle cx="350" cy="300" r="3" fill="#fff"/>
-    </svg>`;
-}
-
-/* 6. DENİZ VE SAHİL */
-function beachScene(alternate) {
-    return svgStart("#b7e2f5") + `
-    <circle cx="80" cy="75" r="${alternate ? 33 : 25}" fill="${alternate ? "#f28c28" : "#f6d365"}"/>
-    <path d="M0 210 Q100 180 200 210 T400 210 T600 205 V360 H0Z" fill="#3e9ec4"/>
-    <path d="M0 270 Q100 240 200 270 T400 270 T600 265" fill="none" stroke="#d9f5ff" stroke-width="8"/>
-    <path d="M0 300 Q100 270 200 300 T400 300 T600 295" fill="none" stroke="#d9f5ff" stroke-width="6"/>
-    <path d="M0 320 Q150 295 300 325 T600 320 V360 H0Z" fill="#f1d49b"/>
-    <path d="M390 95 Q380 65 410 65 Q430 35 450 65 Q480 50 490 85 L400 110Z" fill="#fff"/>
-    <path d="M180 220 L260 220 L220 160Z" fill="${alternate ? "#e45d5d" : "#f1c75b"}" stroke="#6b6872" stroke-width="4"/>
-    <path d="M220 160 V220" stroke="#6b6872" stroke-width="4"/>
-    <path d="M180 225 Q220 245 260 225" fill="#f6f2e9" stroke="#6b6872" stroke-width="4"/>
-    <path d="M455 245 V155" stroke="#805333" stroke-width="10"/>
-    <path d="M455 160 Q415 140 420 110 Q450 120 455 145 Q460 105 490 100 Q495 135 455 160" fill="#3c9b62"/>
-    <path d="M110 310 Q125 280 140 310 Q125 325 110 310Z" fill="${alternate ? "#e77ca8" : "#f1a65b"}"/>
-    <path d="M110 310 Q125 280 140 310" fill="none" stroke="#fff" stroke-width="3"/>
-    <circle cx="480" cy="290" r="${alternate ? 16 : 10}" fill="#fff0c9" stroke="#d6a65c" stroke-width="3"/>
-    <path d="M470 290 H490 M480 280 V300" stroke="#d6a65c" stroke-width="2"/>
-    </svg>`;
-}
-
-/* HER LİSTEYE AİT RESİM ÇİFTİNİ SEÇ */
-function makeScene(listIndex, alternate) {
-    switch (listIndex) {
-        case 0: return gardenScene(alternate);
-        case 1: return musicScene(alternate);
-        case 2: return kitchenScene(alternate);
-        case 3: return hospitalScene(alternate);
-        case 4: return spaceScene(alternate);
-        case 5: return beachScene(alternate);
-        default: return gardenScene(alternate);
-    }
-}
-
-/* HER LİSTE SONRASI FARK BULMA OYUNU */
-function startDifferenceGame() {
-    showScreen("differenceScreen");
-
-    foundDifferences = new Set();
-    differenceClicks = 0;
-
-    document.getElementById("imageA").innerHTML =
-        makeScene(currentList, false);
-
-    const imageB = document.getElementById("imageB");
-    imageB.innerHTML = makeScene(currentList, true);
-
-    const targets = [
-        {id: 0, x: 14, y: 21, label: "Üst sol"},
-        {id: 1, x: 73, y: 23, label: "Üst sağ"},
-        {id: 2, x: 47, y: 66, label: "Orta"},
-        {id: 3, x: 77, y: 57, label: "Sağ alt"},
-        {id: 4, x: 24, y: 77, label: "Sol alt"}
-    ];
-
-    targets.forEach(target => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "difference-hotspot";
-        button.style.left = target.x + "%";
-        button.style.top = target.y + "%";
-        button.setAttribute("aria-label", target.label + " farkı");
-        button.addEventListener("click", () => markDifference(target.id, button));
-        imageB.appendChild(button);
-    });
-
-    document.getElementById("differenceStatus").textContent =
-        "Bulunan fark: 0 / 5";
-
-    differenceStartTime = performance.now();
-}
-
-/* BULUNAN FARKI KAYDET */
-function markDifference(id, button) {
-    if (foundDifferences.has(id)) return;
-
-    differenceClicks++;
-    foundDifferences.add(id);
-    button.classList.add("found");
-
-    document.getElementById("differenceStatus").textContent =
-        "Bulunan fark: " + foundDifferences.size + " / 5";
-
-    if (foundDifferences.size === 5) {
-        const durationMs = performance.now() - differenceStartTime;
-
-        differenceResults.push({
-            participant: participantCode,
-            list: currentList + 1,
-            differencesFound: 5,
-            clicks: differenceClicks,
-            durationMs: Number(durationMs.toFixed(2)),
-            durationSeconds: Number((durationMs / 1000).toFixed(2))
-        });
-
-        document.getElementById("differenceStatus").textContent =
-            "Tüm farkları buldunuz. Tanıma testi başlıyor...";
-
-        setTimeout(startTest, 1200);
-    }
-}
-
-/* TESTİ BAŞLAT */
-function startTest() {
-    showScreen("testScreen");
-
-    currentTest = [...tests[currentList]];
-    currentTest.sort(() => Math.random() - 0.5);
-    currentTestIndex = 0;
-
-    showTestWord();
-}
-
-/* TEST KELİMESİNİ GÖSTER */
-function showTestWord() {
-    if (currentTestIndex >= currentTest.length) {
-        finishList();
-        return;
-    }
-
-    const item = currentTest[currentTestIndex];
-
-    document.getElementById("testWord").textContent = item[0];
-
-    document.getElementById("progress").textContent =
-        "Kelime " + (currentTestIndex + 1) + " / " + currentTest.length;
-
-    testStartTime = performance.now();
-}
-
-/* CEVAP AL */
-function answer(response) {
-    const responseTime = performance.now() - testStartTime;
-    const item = currentTest[currentTestIndex];
-    const correctAnswer = item[1];
-    const isCorrect = response === correctAnswer;
-
-    results.push({
-        participant: participantCode,
-        list: currentList + 1,
-        word: item[0],
-        previouslyShown: correctAnswer,
-        participantAnswer: response,
-        correct: isCorrect,
-        responseTimeMs: responseTime.toFixed(2)
-    });
-
-    currentTestIndex++;
-    showTestWord();
-}
-
-/* LİSTEYİ BİTİR */
-function finishList() {
-    currentList++;
-
-    if (currentList >= lists.length) {
-        showScreen("endScreen");
-    } else {
-        startCountdown("Bir sonraki liste başlayacaktır.", function() {
-            currentWord = 0;
-            showScreen("presentationScreen");
-            showNextWord();
-        });
-    }
-}
-
-/* 30 SANİYELİK LİSTELER ARASI BEKLEME */
-function startCountdown(message, callback) {
-    showScreen("waitingScreen");
-
-    document.getElementById("waitingMessage").textContent = message;
-
-    let remaining = 30;
-
-    const timerNumber = document.getElementById("timerNumber");
-    const timerProgress = document.getElementById("timerProgress");
-    const circumference = 2 * Math.PI * 65;
-
-    timerProgress.style.strokeDasharray = circumference;
-    timerProgress.style.strokeDashoffset = 0;
-    timerNumber.textContent = remaining;
-
-    const countdown = setInterval(function() {
-        remaining--;
-        timerNumber.textContent = remaining;
-
-        const progress = (30 - remaining) / 30;
-        timerProgress.style.strokeDashoffset = circumference * progress;
-
-        if (remaining <= 0) {
-            clearInterval(countdown);
-            callback();
-        }
-    }, 1000);
-}
-
-/* EXCEL OLARAK İNDİR */
-function downloadResults() {
-    if (typeof XLSX === "undefined") {
-        alert("Excel dosyası oluşturulamadı. İnternet bağlantınızı kontrol edip tekrar deneyiniz.");
-        return;
-    }
-
-    const excelRows = results.map(row => ({
-        "Katılımcı": row.participant,
-        "Liste": row.list,
-        "Kelime": row.word,
-        "Daha Önce Gösterildi": row.previouslyShown ? "Evet" : "Hayır",
-        "Katılımcı Cevabı": row.participantAnswer ? "Gördüm" : "Görmedim",
-        "Doğru/Yanlış": row.correct ? "Doğru" : "Yanlış",
-        "Tepki Süresi (ms)": Number(row.responseTimeMs)
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(excelRows);
-    const workbook = XLSX.utils.book_new();
-
-    XLSX.utils.book_append_sheet(
-        workbook,
-        worksheet,
-        "Deney Sonuçları"
-    );
-
-    const gameRows = differenceResults.map(row => ({
-        "Katılımcı": row.participant,
-        "Liste": row.list,
-        "Bulunan Fark": row.differencesFound,
-        "Tıklama Sayısı": row.clicks,
-        "Oyun Süresi (saniye)": row.durationSeconds,
-        "Oyun Süresi (ms)": row.durationMs
-    }));
-
-    const gameWorksheet = XLSX.utils.json_to_sheet(gameRows);
-
-    gameWorksheet["!cols"] = [
-        { wch: 15 },
-        { wch: 10 },
-        { wch: 15 },
-        { wch: 16 },
-        { wch: 22 },
-        { wch: 20 }
-    ];
-
-    XLSX.utils.book_append_sheet(
-        workbook,
-        gameWorksheet,
-        "Fark Bulma Süreleri"
-    );
-
-    worksheet["!cols"] = [
-        { wch: 15 },
-        { wch: 10 },
-        { wch: 20 },
-        { wch: 23 },
-        { wch: 20 },
-        { wch: 15 },
-        { wch: 20 }
-    ];
-
-    XLSX.writeFile(
-        workbook,
-        "DRM_Sonuclari_" + participantCode + ".xlsx"
-    );
-}
-
-/* GIF 5 SANİYE GÖRÜNÜR, SONRA KAYBOLUR */
+/* GIF 5 SANİYE GÖRÜNÜR, SONRA DENEY AÇILIR */
 window.addEventListener("load", function() {
     const splash = document.getElementById("logoSplash");
 
