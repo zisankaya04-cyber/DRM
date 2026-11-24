@@ -656,7 +656,6 @@ function startDifferenceGame() {
 
     /* LİSTEYE GÖRE FARK TIKLAMA KONUMU */
     const targetPositions = [
-        // Bahçe
         [
             {x: 14, y: 21},
             {x: 74, y: 23},
@@ -664,8 +663,6 @@ function startDifferenceGame() {
             {x: 81, y: 58},
             {x: 24, y: 75}
         ],
-
-        // Müzik odası
         [
             {x: 13, y: 21},
             {x: 74, y: 23},
@@ -673,8 +670,6 @@ function startDifferenceGame() {
             {x: 22, y: 60},
             {x: 80, y: 22}
         ],
-
-        // Mutfak
         [
             {x: 13, y: 21},
             {x: 74, y: 27},
@@ -682,8 +677,6 @@ function startDifferenceGame() {
             {x: 80, y: 62},
             {x: 18, y: 57}
         ],
-
-        // Hastane
         [
             {x: 13, y: 21},
             {x: 74, y: 25},
@@ -691,8 +684,6 @@ function startDifferenceGame() {
             {x: 80, y: 60},
             {x: 18, y: 60}
         ],
-
-        // Uzay
         [
             {x: 13, y: 21},
             {x: 65, y: 21},
@@ -700,8 +691,6 @@ function startDifferenceGame() {
             {x: 80, y: 65},
             {x: 21, y: 72}
         ],
-
-        // Deniz
         [
             {x: 13, y: 21},
             {x: 37, y: 53},
@@ -928,19 +917,29 @@ function downloadResults() {
     );
 }
 
-/* GIF 5 SANİYE GÖRÜNÜR, SONRA DENEY AÇILIR */
-window.addEventListener("load", function() {
-    const splash = document.getElementById("logoSplash");
+/* GIF 5 SANİYE SONRA KAPANIR */
+(function () {
+    function closeSplash() {
+        const splash = document.getElementById("logoSplash");
 
-    setTimeout(function() {
-        splash.classList.add("hide");
+        if (!splash) return;
 
-        setTimeout(function() {
-            splash.style.display = "none";
-        }, 1000);
+        setTimeout(function () {
+            splash.classList.add("hide");
 
-    }, 5000);
-});
+            setTimeout(function () {
+                splash.remove();
+            }, 1100);
+
+        }, 5000);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", closeSplash);
+    } else {
+        closeSplash();
+    }
+})();
 
 </script>
 
